@@ -1,36 +1,37 @@
 package com.ynap.tdd.search;
 
-import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class ProductTest {
+	
+	private Product product;
+	private Attribute categoryAttribute;
+	
+	@Before
+	public void createProduct() {
+		product = new Product();
+	}
+	
+	@Before
+	public void createAttribute() {
+		categoryAttribute = new Attribute(Facet.CATEGORY, "Dress");
+	}
 
 	@Test
 	public void matchesNothingWhenProductIsEmpty() {
-		Product product = new Product();
-		Attribute attribute = new Attribute(Facet.CATEGORY, "Dress");
-		SearchCriterea searchCriterea = new SearchCriterea(attribute);
-		
-		boolean result = product.matches(searchCriterea);
-		
-		assertThat(result, is(false));
+		SearchCriterea searchCriterea = new SearchCriterea(categoryAttribute);
+		assertThat(product.matches(searchCriterea), is(false));
 	}
 	
 	@Test
 	public void matchesWhenProductContainsMatchingAttribute() {
-		
-		Attribute attribute = new Attribute(Facet.CATEGORY, "Dress");
-		
-		Product product = new Product();
-		product.setAttribute(attribute);
-		SearchCriterea searchCriterea = new SearchCriterea(attribute);
-		
-		boolean result = product.matches(searchCriterea);
-		
-		assertThat(result, is(true));
-		
+		product.setAttribute(categoryAttribute);
+		SearchCriterea searchCriterea = new SearchCriterea(categoryAttribute);
+		assertThat(product.matches(searchCriterea), is(true));
 	}
 
 }

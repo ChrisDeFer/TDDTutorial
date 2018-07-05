@@ -17,5 +17,20 @@ public class ProductTest {
 		
 		assertThat(result, is(false));
 	}
+	
+	@Test
+	public void matchesWhenProductContainsMatchingAttribute() {
+		
+		Attribute attribute = new Attribute(Facet.CATEGORY, "Dress");
+		
+		Product product = new Product();
+		product.setAttribute(attribute);
+		SearchCriterea searchCriterea = new SearchCriterea(attribute);
+		
+		boolean result = product.matches(searchCriterea);
+		
+		assertThat(result, is(true));
+		
+	}
 
 }

@@ -10,7 +10,9 @@ public class SearchTest {
 	@Test
 	public void matchesNothingWhenProductIsEmpty() {
 		Product product = new Product();
-		boolean result = product.matches();
+		MatchingAttribute attr = new MatchingAttribute("Colour", "Red");
+		SearchCriteria searchCriteria = new SearchCriteria(attr);
+		boolean result = product.matches(searchCriteria);
 		assertThat(result, is(false));
 	}
 	
@@ -18,11 +20,25 @@ public class SearchTest {
 	public void matchesWhenProductContainsMatchingAttribute() {
 		Product product = new Product();
 		MatchingAttribute attr = new MatchingAttribute("Colour", "Red");
+		SearchCriteria searchCriteria = new SearchCriteria(attr);
 		product.add(attr);
 		
-		boolean result = product.matches();
+		boolean result = product.matches(searchCriteria);
 		
 		assertThat(result, is(true));
+	}
+	
+	@Test
+	public void doesNotMatchWhenNoMatchingAttribute() {
+		Product product = new Product();
+		MatchingAttribute attrColourRed = new MatchingAttribute("Colour", "Red");
+		MatchingAttribute attrColourYellow = new MatchingAttribute("Colour", "Yellow");
+		SearchCriteria searchCriteria = new SearchCriteria(attrColourYellow);
+		product.add(attrColourRed);
+		
+		boolean result = product.matches(searchCriteria);
+		
+		assertThat(result, is(false));
 	}
 
 }

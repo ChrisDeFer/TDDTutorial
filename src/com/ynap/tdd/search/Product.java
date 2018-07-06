@@ -4,8 +4,9 @@ public class Product {
 
 	MatchingAttribute matchingAttr;
 	
-	public boolean matches() {
-		return matchingAttr != null;
+	public boolean matches(SearchCriteria searchCriteria) {
+		return matchingAttr != null
+				&& matchingAttr.matches(searchCriteria);
 	}
 
 	public void add(MatchingAttribute attr) {

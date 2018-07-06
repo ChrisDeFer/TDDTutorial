@@ -31,6 +31,4 @@ public class MatchingAttribute {
 				&& getValue().equals(searchCriteria.getMatchingAttribute().getValue());
 	}
 	
-	
-
 }

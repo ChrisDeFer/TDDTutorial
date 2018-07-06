@@ -1,16 +1,19 @@
 package com.ynap.tdd.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Product {
 
-	MatchingAttribute matchingAttr;
+	List<MatchingAttribute> matchingAttrs = new ArrayList<>();
 	
 	public boolean matches(SearchCriteria searchCriteria) {
-		return matchingAttr != null
-				&& matchingAttr.matches(searchCriteria);
+			return !matchingAttrs.isEmpty() 
+					&& matchingAttrs.stream().anyMatch(a -> a.matches(searchCriteria));
 	}
 
 	public void add(MatchingAttribute attr) {
-		matchingAttr = attr;
+		matchingAttrs.add(attr);
 	}
 
 }
